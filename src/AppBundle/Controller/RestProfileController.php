@@ -46,23 +46,6 @@ class RestProfileController extends FOSRestController implements ClassResourceIn
         return $user;
     }
 
- /**
-     * @Annotations\Get("/hello")
-     *
-     *
-     *
-     * Note: Could be refactored to make use of the User Resolver in Symfony 3.2 onwards
-     * more at : http://symfony.com/blog/new-in-symfony-3-2-user-value-resolver-for-controllers
-     */
-    public function helloAction()
-    {
-          $user = $this->container->get('security.token_storage')->getToken()->getUser();
-
-    
-
-        return $user;
-    }
-
     /**
      * @param Request       $request
      * @param UserInterface $user

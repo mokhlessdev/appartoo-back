@@ -67,13 +67,15 @@ class MarsupilamiController extends Controller {
 
     public function removeAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-        $body = $request->getContent();
-        $data = json_decode($body, true);
-        $amis = $request->query->get('id');
-        $ami = $em->getRepository('AppBundle:Marsupilami')->find($amis);
+        $idFriend = $request->query->get('id');
+        $friend = $em->getRepository('AppBundle:Marsupilami')->find($idFriend);
         $currentUserId = $this->get('security.token_storage')->getToken()->getUser()->getId();
         $currentUser = $em->getRepository('AppBundle:Marsupilami')->find($currentUserId);
-        $currentUser->removeFriend($ami);
+        
+//                return new JsonResponse($currentUser->getUsername());
+
+        
+        $currentUser->removeFriend($friend);
         $em->persist($currentUser);
         $em->flush();
         return new JsonResponse(Response::HTTP_OK);
@@ -97,11 +99,10 @@ class MarsupilamiController extends Controller {
     }
 
     public function invitAction(Request $request) {
-        $content = json_decode($request->getContent(), true);
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
         $email = $request->query->get('email'); 
         $text = "<html><body>Bonjour,Je suis " . $user->getUsername() . " et je vous invite à me joindre sur mon.Veillez cliquer sur le "
-                . '<a href=localhost/appartoo-app/appartoo-app/web/app_dev.php/register>lien</a>. </body></html>';
+                . '<a href=http://localhost/appartoo-front/index.html>lien</a>. </body></html>';
         $message = \Swift_Message::newInstance()
                 ->setSubject('Invitation')
                 ->setFrom('demo.appartoo@gmail.com')
@@ -109,7 +110,7 @@ class MarsupilamiController extends Controller {
                 ->setContentType("text/html")
                 ->setBody($text, 'text/html');
         $this->get('mailer')->send($message);
-        return new JsonResponse(array('data' => 'Invitation envoyé'), Response::HTTP_OK);
+        return new JsonResponse(array('message' => 'Invitation envoyé à '.$email), Response::HTTP_OK);
     }
 
 }
