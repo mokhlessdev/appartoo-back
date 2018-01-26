@@ -80,7 +80,12 @@ fos_user:
         sender_name:    mr_mailer
     service:
         mailer: user.mailer.rest
-
+    registration:
+        form:
+            type: AppBundle\Form\RegistrationType
+    profile:
+        form:
+            type: AppBundle\Form\ProfileType
 
 # Nelmio CORS
 nelmio_cors:

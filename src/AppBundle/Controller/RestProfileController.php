@@ -50,12 +50,13 @@ class RestProfileController extends FOSRestController implements ClassResourceIn
      * @param Request       $request
      * @param UserInterface $user
      *
-     * @ParamConverter("user", class="AppBundle:User")
+     * @ParamConverter("user", class="AppBundle:Marsupilami")
      *
      * @return View|\Symfony\Component\Form\FormInterface
      */
     public function putAction(Request $request, UserInterface $user)
     {
+      //  dump($user);die();
         return $this->updateProfile($request, true, $user);
     }
 

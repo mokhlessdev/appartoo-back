@@ -16,3 +16,9 @@ services:
         class: AppBundle\Mailer\RestMailer
         public: false
         parent: fos_user.mailer.twig_swift
+
+    acme.registration.form.type:
+        class: AppBundle\Form\RegistrationType
+        arguments: ["%fos_user.model.user.class%"]
+        tags:
+            - { name: form.type, alias: acme_user_registration }
